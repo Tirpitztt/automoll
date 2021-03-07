@@ -1,0 +1,99 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+
+    <!-- this is header -->
+    <div th:fragment="header">
+       
+
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen"/>
+              
+             
+
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+                th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+                
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" 
+        crossorigin="anonymous"></script> 
+               
+        <script src="../../static/js/mainscript.js"
+                        th:src="@{/js/mainscript.js}"></script>
+                        
+		<link rel="stylesheet" th:href="@{/css/flaticon.css}"
+              href="../../static/css/flaticon.css">
+        <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">      
+              
+        <link rel="stylesheet" th:href="@{/css/style.css}"
+              href="../../static/css/style.css"/>
+    </div>
+
+</head>
+
+<body>
+
+
+<div th:fragment="heder">
+<div class="container">
+       <div class="heder-box">
+           <div class="row">
+            <div class="col-8">
+               <div class="title-box">
+                   <p>Авторазборка "АвтоТехноМолл"</p>
+                <p>Запасные части из Европы</p>
+               </div>
+                
+            </div>
+            <div class="col-4">
+               <div class="list-out" sec:authorize="!isAuthenticated()">
+                   <ul class="login">
+                    <li><a th:href="@{/registration}">Зарегаться</a></li>
+                    <li><a th:href="@{/login}">Войти</a></li>
+                </ul>
+               </div>
+                <div class="list-in" sec:authorize="isAuthenticated()">
+                    <ul class="login">
+                    <li>Привет:<span sec:authentication="name"></span></li>
+                    <li><a th:href="@{/logout}">Выйти</a></li>
+                </ul>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="navbar-box">
+                    <ul class="navbar">
+                        <li><p id="menu-home-but" class="menu-butt">Главная</p></li>
+                        <li><p id="menu-shop-but" class="menu-butt">Магазин</p></li>
+                        <li><p id="menu-dis-but" class="menu-butt">Разборка</p>
+                            <ul class="razb-list">
+                                <li><p>Кузовщина</p></li>
+                                <li><p>Подвеска</p></li>
+                                <li><p>Двигатель</p></li>
+                                <li><p>Электроника</p></li>
+                            </ul>
+                        </li>
+                        <li><p class="menu-butt">Заглушка</p></li>
+                        <li><p class="menu-butt">Корзина</p></li>
+                        <li sec:authorize="hasRole('ADMIN')"><p id="menu-admin-but" class="menu-butt">Админка</p>
+								<ul class ="razb-list ref-book">
+									<li><p id="ref-book-but">Справочники</p></li>
+								</ul>                        
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+       </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

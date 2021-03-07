@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<div th:replace="/fragments/header :: header" ></div>
+<title>Администраторская</title>
+</head>
+<body>
+	<div th:replace="/fragments/header :: heder"></div>
+
+
+
+	<div class="container body-content">
+		<div class="admin-title">
+			<p>Администраторский отдел</p>
+		</div>
+		<div class="row">
+			<div class="col-9">
+				<div class="admin-info-box"></div>
+				<div class="admin-product-box">
+					<form></form>
+
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="admin-but-box">
+					<div class="search-box">
+						<input type="text" id="search-input" placeholder=" search ">
+						<span id="search-but">&#128269;</span>
+					</div>
+
+					<div>
+						<button type="button" id="getUsersButton">Пользователи</button>
+					</div>
+					<div>
+						<button type="button" id="getProductButton">Продукты</button>
+					</div>
+					<div>
+						<button type="button" id="addEntityButton">Добавить</button>
+					</div>
+					<div>
+						<button type="button" id="editEntityButton">Исправить</button>
+					</div>
+					<div>
+						<button type="button" id="deleteEntityButton">Удалить</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="product-wrap">
+		<div class="filter-box">
+			<select class="select-filter" id="cat-input-filter" name="category">
+											<option value="all">все категории</option>
+											<option value="body">кузовщина</option>
+											<option value="engine">двигатель</option>
+											<option value="suspension">подвеска</option>
+											<option value="undercarriage">ходовая</option>
+											<option value="electro">электрика</option>
+										</select>
+			<select class="select-filter" name="name" id="name-input-filter">
+											<option th:each="detail:${details}"
+													th:text="${detail.name}">
+											</option>
+										</select>
+			<select class="select-filter" name="marka" id="marka-input-filter">
+											<option th:each="marka:${marka}"
+													th:text="${marka.name}">
+											</option>
+										</select>
+			<select class="select-filter" name="model" id="model-input-filter"></select>
+			
+		<button type="button" class="bttn" id="bttn-filter" ><span class="flaticon-magnifying-glass"></span></button>								
+			
+		</div>
+		<div class="card-box" th:each="prod:${products}">
+			<div class="card-pr">
+				<div class="row">
+					<div class="col-3">
+						<div class="img-crd-box"><img class="img-crd" th:src="@{/img/pictures/nofoto.png}"></div>
+					</div>
+					<div class="col-3">
+						<label class="label-card">Наименование</label>
+						<div class="card-name"><p th:text="${prod.name}"></p></div>
+						<label class="label-card">Артикул</label>
+						<div class="card-art"><p th:text="${prod.art}"></p></div>
+						<div class="card-side">
+							<div class="side-span" th:switch="${prod.side}">
+							    <span th:case="'R'">Правый</span>
+							    <span th:case="'L'">Левый</span>
+							    <span th:case="*"></span>
+							</div>
+							<div class="side-span" th:switch="${prod.front}">
+							    <span th:case="'F'">Перед</span>
+							    <span th:case="'B'">Зад</span>
+							    <span th:case="*"></span>
+							</div>
+						</div>
+						<div class="card-status" th:switch="${prod.status}">
+							<p th:case=true style="color:green;font-weight:bold;">В наличии</p>
+						    <p th:case=false style="color:red; font-weight:bold;">Нет в наличии</p>
+						</div>
+					</div>
+					<div class="col-3">
+					<label class="label-card">Автомобиль</label>
+						<div class="card-marka">
+							<p th:text="${prod.car.carModel.marka.name}"></p>
+							<p th:text="${prod.car.carModel.name}"></p>
+						</div>
+						
+						<div class="card-year">
+							<p th:text="${prod.car.yIssue}+' г.в.'"></p>
+							<p th:text="${prod.car.bodyCar}"></p>
+							</div>
+						<div class="card-engine">
+								<span th:text="${prod.car.engine[0].volume}"></span><span th:text="${prod.car.engine[0].ingection}"></span>
+								<span th:text="' '+${prod.car.engine[0].type}"></span><span th:text="' '+${prod.car.transmission}"></span>
+								</div>
+						
+					</div>
+					<div class="col-2">
+					<label class="label-card">Стоимость</label>
+						<div class="card-price"><span th:text="${prod.price}+'  '"></span><span>USD</span></div>
+					</div>
+					<div class="col-1">
+						<div class="flatic-a"><a  th:href="@{/editPage/{id}(id=${prod.id})}" title="редактировать"><span class="icons-card flaticon-edit"></span></a></div>
+						<div class="flatic-a"><a  href="#" title="удалить"><span class="icons-card flaticon-garbage"></span></a></div>
+						<div class="flatic-a"><a  th:href="@{/details/{id}(id=${prod.id})}" th:target="_blank" title="подробнее"><span class="icons-card flaticon-book"></span></a></div>
+						<div class="flatic-a"><a  href="#" title="распечатать чек"><span class="icons-card flaticon-printer"></span></a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="form-popup" id="form-popup-User">
+			<div class="row">
+				<div class="col-4"></div>
+				<div class="col-4">
+					<form class="form-reg" id="form_user" th:action="@{/editUser}"
+						method="post" th:object="${user}">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<p class="close-but ">
+							<span id="close-user">&times;</span>
+						</p>
+						<h3 id="tytle-edit-user">Исправить ёпт</h3>
+						<h3 id="tytle-add-user">Добавить пользователя</h3>
+						<p class="invalid-msg" id="rulls-msg">
+							Логин должен быть уникальный<br>Почта должна содержать
+							спецсимволы <br>Пароль должен быть не меньше пяти символов
+						</p>
+						<div class="form-box">
+							<input type="hidden" name="id" id="id-user-field">
+							<div class="field-box">
+								<label for="name">Имя</label> <input type="text" name="name"
+									id="name-user-field">
+								<p class="invalid-msg" id="inv-name">Тут должно быть имя</p>
+
+							</div>
+							<div class="field-box">
+								<label for="username">Логин</label> <input type="text"
+									name="username" id="login-user-field">
+								<p class="invalid-msg" id="inv-log">Придумай логин
+									пооригинальнее</p>
+							</div>
+							<div class="field-box">
+								<label for="email">E-mail</label> <input type="text"
+									name="email" id="email-user-field">
+								<p class="invalid-msg" id="inv-mail">Не правильный адрес
+									почты</p>
+							</div>
+							<div class="field-box">
+								<label for="password">Пароль</label> <input type="password"
+									name="password" id="pass-user-field">
+								<p class="invalid-msg" id="inv-pass">Читай правила
+									составления пароля</p>
+							</div>
+							<div class="field-box">
+								<label for="repeat">Пароль</label> <input type="password"
+									name="repeat" id="repeat-user-field">
+								<p class="invalid-msg" id="inv-rept">Пароли не совпадают</p>
+							</div>
+						</div>
+						<button type="button" class="but-inp" id="but-user">Сохранить</button>
+					</form>
+
+				</div>
+				<div class="col-4"></div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+	<div th:replace="/fragments/footer :: footer"></div>
+	<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
+	<script type="text/javascript" src="../js/adminscript.js"></script>
+	
+</body>
+</html>

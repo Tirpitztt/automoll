@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<div th:replace="/fragments/header :: header" />
+<title>Справочники</title>
+</head>
+<body>
+	<div th:replace="/fragments/header :: heder" />
+	<div class="container">
+		<div class="title-ref">
+			<p>Справочники</p>
+			<p>Администраторская страница корректирования справочной
+				информации</p>
+		</div>
+		<div class="row">
+			<div class="col-9">
+				<div class="details-ref-box">
+					<div class="row">
+						<div class="col-10">
+							<div class="detail-info-box">
+							
+							</div>
+						</div>
+						<div class="col-2 btn-wrp">
+							<div class="det-butt-box">
+								<div>
+									<button class="bttn" title="добавить" id="saveDet">
+										<span class="flaticon-download"></span>
+									</button>
+								</div>
+								<div>
+									<button class="bttn" title="исправить" id="editDet">
+										<span class="flaticon-edit"></span>
+									</button>
+								</div>
+								<div>
+									<button class="bttn" title="удалить" id="deleteDet">
+										<span class="flaticon-garbage"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="detail-ref-box">
+						<div class="row">
+							<div class="col-2">
+								<div class="form-item-box">
+									<label for="name">Наименование</label>
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="form-item-box">
+									<input type="text" name="name" id="det-name">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="form-item-box">
+									<label for="articul">Артикул</label>
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="form-item-box">
+									<input type="text" name="articul" id="det-articul">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="form-item-box">
+									<label for="category">Категория</label>
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="form-item-box">
+									
+									<select id="cat-det-field" name="category">
+											<option value="body">кузовщина</option>
+											<option value="engine">двигатель</option>
+											<option value="suspension">подвеска</option>
+											<option value="undercarriage">ходовая</option>
+											<option value="electro">электрика</option>
+										</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ref-info-box">
+					<div class="row">
+						<div class="col-2">
+							<div class="title-table-box">
+								<p>Марка</p>
+							</div>
+							<div class="marka-box"></div>
+						</div>
+						<div class="col-10">
+							<div class="title-table-box">
+								<p>Модель</p>
+							</div>
+							<div class="model-box"></div>
+						</div>
+					</div>
+
+					<div class="title-table-box">
+						<p>Автомобили</p>
+					</div>
+					<div class="car-box refbox"></div>
+					<div class="title-table-box">
+						<p>Двигатели</p>
+					</div>
+					<div class="engine-box refbox"></div>
+
+				</div>
+			</div>
+			<div class="col-3">
+				<div>
+					<button type="button" class="mainbutref" id="getDetailsButton">Детали</button>
+				</div>
+				<div>
+					<button type="button" class="mainbutref" id="getAutoButton">Авто</button>
+				</div>
+				<div>
+					<button type="button" class="mainbutref" id="addRefButton">Добавить</button>
+				</div>
+				<div>
+					<button type="button" class="mainbutref" id="editRefButton">Редактировать</button>
+				</div>
+				<div>
+					<button type="button" class="mainbutref" id="delRefButton">Удалить</button>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="addRef-form-box">
+			<div class="row">
+				<div class="col-12">
+					<div class="wrapper-form-ref">
+						<form id="form_car" class="form-ref" th:action="@{/saveCar}"
+							th:object="${Car}" method="get">
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
+							<p>Добавить автомобиль</p>
+							<div class="row">
+								<div class="col-5">
+									<div class="fw">
+										<div class="field-box">
+											<label for="m">марка</label> <select id="select_marka_car"
+												name="m" class="select-marka">
+												<option>no select</option>
+
+											</select>
+											<p class="invalid-msg">Заполни поле</p>
+										</div>
+										<div class="field-box">
+											<label for="mod">модель</label> <select id="select_model"
+												name="mod" class="select-model">
+												<option>no select</option>
+
+											</select>
+											<p class="invalid-msg">Заполни поле</p>
+										</div>
+										<div class="field-box">
+											<label for="bodyCar">кузов</label> <select id="bodyCar_inp"
+												name="bodyCar" class="select-body">
+												<option>Седан</option>
+												<option>Универсал</option>
+												<option>Хэтчбек</option>
+												<option>Внедорожник</option>
+												<option>Минивен</option>
+												<option>Купе</option>
+												<option>Кабриолет</option>
+												<option>Фургон</option>
+												<option>Автобус</option>
+												<option>Роадстер</option>
+												<option>Каблук</option>
+
+											</select>
+											<p class="invalid-msg">Заполни поле</p>
+										</div>
+
+										<div class="field-box">
+											<label for="yIssue">год выпуска</label> <input type="text"
+												name="yIssue" id="issue_inp">
+											<p class="invalid-msg">Заполни поле</p>
+										</div>
+										<div class="field-box">
+											<label for="transmission">коробка</label> <select
+												id="trans_inp" name="transmission" class="select-trans">
+												<option>АКПП</option>
+												<option>МКПП</option>
+											</select>
+											<div class="field-box">
+												<label for="file">image</label> <input type="file"
+													name="file" id="file_inp">
+												<p class="invalid-msg">Заполни поле</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-7">
+									<div class="fw">
+										<div class="select-engine"></div>
+									</div>
+								</div>
+							</div>
+							<div class="wrap-but-ref">
+								<button type="button" id="but_car" class="button-ref">save</button>
+							</div>
+
+						</form>
+					</div>
+					<div class="wrapper-form-ref">
+			<div class="row">
+				<div class="col-6">
+					<form id="form_marka" class="form-ref" th:action="@{/saveMarka}"
+						th:object="${manufactura}" method="get">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<p>Добавить марку</p>
+						<label for="name">марка</label> <input type="text" name="name"
+							id="marka_field">
+						<p class="invalid-msg">Заполни поле</p>
+						<label for="country">Страна</label> <input type="text" name="country"
+							id="country_field">
+						<p class="invalid-msg">Заполни поле</p>
+						<div class="wrap-but-ref">
+							<button type="button" id="but_marka" class="button-ref">save</button>
+						</div>
+
+					</form>
+
+					<form id="form_model" class="form-ref" th:action="@{/saveModel}"
+						th:object="${carModel}" method="get">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<p>Добавить модель</p>
+						<div class="field-box">
+							<label for="m">марка</label> <select id="select_marka" name="m"
+								class="select-marka">
+								<option>no select</option>
+
+							</select>
+							<p class="invalid-msg">Заполни поле</p>
+						</div>
+						<div class="field-box">
+							<label for="name">модель</label> <input type="text" name="name"
+								id="modName">
+							<p class="invalid-msg">Заполни поле</p>
+						</div>
+						<div class="field-box">
+							<label for="secName">рестайлинг</label> <input type="text"
+								name="secName" id="modSec">
+
+						</div>
+						<div class="field-box">
+							<label for="yStart">год релиза</label> <input type="text"
+								name="yStart" id="modStart">
+							<p class="invalid-msg">Заполни поле</p>
+						</div>
+						<div class="field-box">
+							<label for="yEnd">год окончания</label> <input type="text"
+								name="yEnd" id="modEnd">
+							<p class="invalid-msg">Заполни поле</p>
+						</div>
+						<div class="wrap-but-ref">
+							<button type="button" id="but_model" class="button-ref">save</button>
+						</div>
+
+					</form>
+				</div>
+				<div class="col-6">
+					<form id="form_engine" class="form-ref" th:action="@{/saveEngine}"
+						th:object="${engine}" method="get">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<p>Добавить двигатель</p>
+						<div class="field-box">
+							<label for="type">тип топлива</label> <select id="type-eng-field"
+								name="type" class="select-type-eng">
+								<option>no select</option>
+								<option>Бензин</option>
+								<option>Дизель</option>
+								<option>Электро</option>
+							</select>
+							<p class="invalid-msg" id="inv-type">Заполни поле</p>
+
+						</div>
+						<div class="field-box">
+							<label for="volume">объем, л</label> <input type="text"
+								name="volume" id="volume-eng-field">
+							<p class="invalid-msg" id="inv-volume">Заполни поле</p>
+
+						</div>
+
+						<div class="field-box">
+							<label for="ingection">впрыск</label> <input type="text"
+								name="ingection" id="ingection-eng-field">
+							<p class="invalid-msg" id="inv-ingection">Заполни поле</p>
+
+						</div>
+						<div class="field-box">
+							<label for="valve">клапанов, шт</label> <input type="text"
+								name="valve" id="valve-eng-field">
+							<p class="invalid-msg" id="inv-valve">Заполни поле</p>
+
+						</div>
+						<div class="field-box">
+							<label for="horse">мощность,л/с</label> <input type="text"
+								name="horse" id="horse-eng-field">
+							<p class="invalid-msg" id="inv-horse">Заполни поле</p>
+
+						</div>
+
+						<div class="field-box">
+							<label for="number">номер</label> <input type="text"
+								name="number" id="number-eng-field">
+							<p class="invalid-msg" id="inv-number">Заполни поле</p>
+
+						</div>
+						<div class="field-box">
+							<label for="power">мощность, kWt</label> <input type="text"
+								name="power" id="power-eng-field">
+							<p class="invalid-msg" id="inv-power">Заполни поле</p>
+
+						</div>
+						<div class="field-box">
+							<label for="arrang">компоновка</label> <input type="text"
+								name="arrang" id="arrang-eng-field">
+							<p class="invalid-msg" id="inv-arrang">Заполни поле</p>
+
+						</div>
+						<div class="wrap-but-ref">
+							<button type="button" class="button-ref" id="but-engine">Сохранить</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+				</div>
+			</div>
+		</div>
+
+				
+
+
+	</div>
+
+	<div th:replace="/fragments/footer :: footer" />
+	<script type="text/javascript" src="../js/refbookscript.js"></script>
+</body>
+</html>

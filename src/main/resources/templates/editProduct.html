@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<div th:replace="/fragments/header :: header" />
+<title>Редактор детали</title>
+</head>
+<body>
+<div th:replace="/fragments/header :: heder"></div>
+<div class="container">
+	<div class="prod-form-box">
+			<div class="row">
+				<div class="col-12">
+					<form class="prod-form" name="product" method="post" id="form_prod-edit"
+					th:object="${product}">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<div class="admin-title">
+							<p>Изменить запчасть<span id="productID" th:text="${product.id}"></span></p>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<div class="row">
+									<div class="col-6">
+										<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="marka">марка</label>
+									</div>
+									<div class="lab-box">
+										<select name="marka" id="marka-prod-field-edit">
+											<option selected th:text="${product.car.carModel.marka.name}"></option> 
+											<option th:each="marka:${marka}"><span
+													th:text="${marka.name}"></span>
+											</option>
+										</select>
+									</div>
+									<div id="last-selected"></div>
+									<p class="invalid-msg" id="inv-marka-edit">Тут должно быть имя</p>
+								</div>
+
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="name">наименование</label>
+									</div>
+
+									<div class="lab-box">
+										
+										<select name="name" id="name-prod-field-edit">
+										<option selected th:text="${product.name}"></option>
+											<option th:each="detail:${details}"><span
+													th:text="${detail.name}"></span>
+											</option>
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-name-edit">Тут должно быть имя</p>
+
+								</div>
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="price">цена</label>
+									</div>
+
+									<div class="lab-box">
+										<input type="text" name="price" id="price-prod-field-edit" th:value="${product.price}">
+									</div>
+
+									<p class="invalid-msg" id="inv-name-edit">Тут должно быть имя</p>
+
+								</div>
+									<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="category">категория</label>
+									</div>
+									<div class="lab-box">
+										<select id="cat-prod-field-edit" name="category">
+											<option selected th:text="${product.category}"></option>
+											<option value="body">кузовщина</option>
+											<option value="engine">двигатель</option>
+											<option value="suspension">подвеска</option>
+											<option value="undercarriage">ходовая</option>
+											<option value="electro">электрика</option>
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-cat-edit">Тут должна быть категория</p>
+								</div>
+									</div>
+									<div class="col-6">
+									<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="model">модель</label>
+									</div>
+
+									<div class="lab-box">
+										<select name="model" id="model-prod-field-edit">
+										
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-marka-edit">Тут должно быть имя</p>
+								</div>
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="art">артикул</label>
+									</div>
+
+									<div class="lab-box">
+										<input type="text" name="art" id="art-prod-field-edit" th:value="${product.art}">
+									</div>
+
+									<p class="invalid-msg" id="inv-name-edit">Тут должно быть имя</p>
+								</div>
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="status">статус</label>
+									</div>
+									<div class="lab-box">
+										<select id="status-prod-field-edit" name="status">
+											<option value="1">в наличии</option>
+											<option value="0">нет в наличии</option>
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-name-edit">Тут должно быть имя</p>
+								</div>
+								<div class="row">
+									<div class="col-3">
+										<label for="sideR">прав</label>
+										<input type="checkbox" name="sideR" class="prod-check-inp" id="side-r-edit" value="R" 
+										th:checked="${product.side=='R'}?true:false" />
+									</div>
+									<div class="col-3">
+										<label for="sideL">лев</label>
+										<input type="checkbox" name="sideL" class="prod-check-inp" id="side-l-edit" value="L" 
+										th:checked="${product.side=='L'}?true:false"/>
+									</div>
+									<div class="col-3">
+										<label for="frontF">перед</label>
+										<input type="checkbox" name="frontF" class="prod-check-inp" id="front-f-edit" value="F"
+										th:checked="${product.front=='F'}?true:false"/>
+									</div>
+									<div class="col-3">
+										<label for="frontB">зад</label>
+										<input type="checkbox" name="frontB" class="prod-check-inp" id="front-b-edit" value="B"
+										th:checked="${product.front=='B'}?true:false"/>
+									</div>
+								</div>
+									
+									
+									</div>
+								</div>
+							
+								
+								
+								<div class="list-car">
+									<input type="text" id="yearCar-edit" placeholder="год выпуска"
+										name="year" />
+									<ul id="cars-model-edit"></ul>
+								</div>
+							</div>
+							<div class="col-6">
+							<!--  
+								<div class="file-wrap" id="drop_box-edit">
+									<div class="file-point" id="file1-point-edit" 
+									th:style="'background:url('+@{/img/pictures/{name}(name=${product.cards.empty}?nofoto.png:(${product.cards[0].name}?${product.cards[0].name}:nofoto.png))}+');background-size: cover;'"></div>
+									<div class="file-point" id="file2-point-edit" 
+									th:style="'background:url('+@{/img/pictures/{name}(name=${product.cards.empty}?nofoto.png:(${product.cards[1].name}?${product.cards[1].name}:nofoto.png))}+');background-size: cover;'"></div>
+									<div class="file-point" id="file3-point-edit" 
+									th:style="'background:url('+@{/img/pictures/{name}(name=${product.cards.empty}?nofoto.png:(${product.cards[2].name}?${product.cards[2].name}:nofoto.png))}+');background-size: cover;'"></div>
+									<div class="file-point" id="file4-point-edit" 
+									th:style="'background:url('+@{/img/pictures/{name}(name=${product.cards.empty}?nofoto.png:(${product.cards[3].name}?${product.cards[3].name}:nofoto.png))}+');background-size: cover;'"></div>
+									<input type="file" class="hidden-input">
+								</div>
+								-->
+								<div class="file-wrap"   id="drop_box-edit">
+									<div class="file-point" th:each="card,iter:${product.cards}" th:id="'file'+${iter.index}+'-point-edit'" th:style="'background:url('+@{/img/pictures/{name}(name=${card.name})}+');background-size: cover;'"></div>
+								</div>
+								<div class="txt-ar">
+									<p>Примечание для клиента(видно на сайте)</p>
+									<textarea rows="4" cols="60" id="txt-cl-edit" th:text="${product.textClient}"></textarea>
+									<p>Примечание для менеджеров(не видно на сайте)</p>
+									<textarea rows="4" cols="60" id="txt-sv-edit" th:text="${product.textServer}"></textarea>
+								</div>
+								
+							</div>
+						</div>
+						<button type="button" class="but-inp" id="but-prod-edit">Сохранить</button>
+					</form>
+	
+	
+
+
+				</div>
+			</div>
+
+		</div>
+</div>
+	
+	
+	
+	
+	
+	
+	<div th:replace="/fragments/footer :: footer"></div>
+	<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
+	<script type="text/javascript" src="../js/adminscript.js"></script>
+	<script type="text/javascript"  src="../js/productedit.js"></script>
+
+</body>
+</html>

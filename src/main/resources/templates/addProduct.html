@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<div th:replace="/fragments/header :: header" />
+<title>Добавить деталь</title>
+</head>
+<body>
+<div th:replace="/fragments/header :: heder"></div>
+<div class="container">
+	<div class="prod-form-box">
+			<div class="row">
+				<div class="col-12">
+					<form class="prod-form" name="product" method="post" id="form_prod"
+						th:action="@{/saveProduct}" th:object="${product}">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<div class="admin-title">
+							<p>Добавить запчасть</p>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<div class="row">
+									<div class="col-6">
+										<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="marka">марка</label>
+									</div>
+									<div class="lab-box">
+										<select name="marka" id="marka-prod-field">
+											<option th:each="marka:${marka}"><span
+													th:text="${marka.name}"></span>
+											</option>
+										</select>
+									</div>
+									<div id="last-selected"></div>
+									<p class="invalid-msg" id="inv-marka">Тут должно быть имя</p>
+								</div>
+
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="name">наименование</label>
+									</div>
+
+									<div class="lab-box">
+										
+										<select name="name" id="name-prod-field">
+											<option th:each="detail:${details}"><span
+													th:text="${detail.name}"></span>
+											</option>
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-name">Тут должно быть имя</p>
+
+								</div>
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="price">цена</label>
+									</div>
+
+									<div class="lab-box">
+										<input type="text" name="price" id="price-prod-field">
+									</div>
+
+									<p class="invalid-msg" id="inv-name">Тут должно быть имя</p>
+
+								</div>
+									<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="category">категория</label>
+									</div>
+									<div class="lab-box">
+										<select id="cat-prod-field" name="category">
+											<option value="body">кузовщина</option>
+											<option value="engine">двигатель</option>
+											<option value="suspension">подвеска</option>
+											<option value="undercarriage">ходовая</option>
+											<option value="electro">электрика</option>
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-cat">Тут должна быть категория</p>
+								</div>
+									</div>
+									<div class="col-6">
+									<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="model">модель</label>
+									</div>
+
+									<div class="lab-box">
+										<select name="model" id="model-prod-field">
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-marka">Тут должно быть имя</p>
+								</div>
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="art">артикул</label>
+									</div>
+
+									<div class="lab-box">
+										<input type="text" name="art" id="art-prod-field">
+									</div>
+
+									<p class="invalid-msg" id="inv-name">Тут должно быть имя</p>
+								</div>
+								<div class="field-box-prod">
+									<div class="lab-box">
+										<label for="status">статус</label>
+									</div>
+									<div class="lab-box">
+										<select id="status-prod-field" name="status">
+											<option value="1">в наличии</option>
+											<option value="0">нет в наличии</option>
+										</select>
+									</div>
+
+									<p class="invalid-msg" id="inv-name">Тут должно быть имя</p>
+								</div>
+								<div class="row">
+									<div class="col-3">
+										<label for="sideR">прав</label>
+										<input type="checkbox" name="sideR" class="prod-check-inp" id="side-r" value="R" />
+									</div>
+									<div class="col-3">
+										<label for="sideL">лев</label>
+										<input type="checkbox" name="sideL" class="prod-check-inp" id="side-l" value="L"/>
+									</div>
+									<div class="col-3">
+										<label for="frontF">перед</label>
+										<input type="checkbox" name="frontF" class="prod-check-inp" id="front-f" value="F"/>
+									</div>
+									<div class="col-3">
+										<label for="frontB">зад</label>
+										<input type="checkbox" name="frontB" class="prod-check-inp" id="front-b" value="B"/>
+									</div>
+								</div>
+									
+									
+									</div>
+								</div>
+							
+								
+								
+								<div class="list-car">
+									<input type="text" id="yearCar" placeholder="год выпуска"
+										name="year" />
+									<ul id="cars-model"></ul>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="file-wrap" id="drop_box">
+								<!--  
+									<div class="file-point" id="file1-point"></div>
+									<div class="file-point" id="file2-point"></div>
+									<div class="file-point" id="file3-point"></div>
+									<div class="file-point" id="file4-point"></div>
+									-->
+									
+								</div>
+								<div class="txt-ar">
+									<p>Примечание для клиента(видно на сайте)</p>
+									<textarea rows="4" cols="60" id="txt-cl"></textarea>
+									<p>Примечание для менеджеров(не видно на сайте)</p>
+									<textarea rows="4" cols="60" id="txt-sv"></textarea>
+								</div>
+								
+							</div>
+						</div>
+						<button type="button" class="but-inp" id="but-prod">Сохранить</button>
+					</form>
+	
+	
+
+
+				</div>
+			</div>
+
+		</div>
+</div>
+	
+	
+	
+	
+	
+	
+	<div th:replace="/fragments/footer :: footer"></div>
+	<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
+	<script type="text/javascript" src="../js/adminscript.js"></script>
+	
+	<script type="text/javascript"  src="../js/product.js"></script>
+</body>
+</html>

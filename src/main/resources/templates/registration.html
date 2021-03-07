@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<div th:replace="/fragments/header :: header"/>
+<title>REGISTRATION</title>
+</head>
+<body>
+
+
+	<div class="conteinar">
+        <div class="row">
+            <div class="col-4">
+                
+            </div>
+            <div class="col-4">
+                
+                    <form class="form-reg" id="form_reg" th:action="@{/save}" method="post" th:object="${user}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <p class="close-but"><span>&times;</span></p>
+                     <h3>Зарегистрируйся ёпт</h3>
+                      <div class="form-box">
+                       <div class="field-box">
+                           <label for="name">Имя</label>
+                           <input type="text" name="name">
+                       </div>
+                       <div class="field-box">
+                           <label for="username">Логин</label>
+                           <input type="text" name="username">
+                       </div>
+                       <div class="field-box">
+                           <label for="email">E-mail</label>
+                           <input type="text" name="email">
+                       </div>
+                       <div class="field-box">
+                           <label for="password">Пароль</label>
+                           <input type="text" name="password">
+                       </div>
+                       <div class="field-box">
+                           <label for="repeat">Пароль</label>
+                           <input type="text" name="repeat">
+                       </div> 
+                       </div>
+                        <button type="button" class="but-inp">Зарегаться</button>
+                    </form>
+                    
+                    
+                
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="../static/js/formscript.js"></script>
+</body>
+</html>

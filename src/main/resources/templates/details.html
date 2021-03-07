@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<div th:replace="/fragments/header :: header" />
+<title th:text="${product.name}"></title>
+</head>
+<body>
+	<div th:replace="/fragments/header :: heder" />
+	<div class="container">
+		<div class="details-box">
+			<div class="row">
+				<div class="col-5">
+					<p class="title-product" th:text="${product.name}"></p>
+					<div class="side-span" th:switch="${product.side}">
+						<span th:case="'R'">Правый</span> <span th:case="'L'">Левый</span>
+						<span th:case="*"></span>
+					</div>
+					<div class="side-span" th:switch="${product.front}">
+						<span th:case="'F'">Перед</span> <span th:case="'B'">Зад</span> <span
+							th:case="*"></span>
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="det-car card-marka">
+						<p th:text="${product.car.carModel.marka.name}"></p>
+						<p th:text="${product.car.carModel.name}"></p>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="butt-wrap">
+						<div class="busket-but">
+							<a href="#"><span class="flaticon-shopping-cart"></span></a>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+			<div class="carusel-box">
+				<div class="row">
+					<div class="col-12">
+						<div class="pic-box">
+							<div id="carouselExampleControls" class="carousel slide"
+								data-ride="carousel">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<img th:src="@{/img/pictures/{name}(name=${product.cards[0].name})}"
+											class="d-block w-100" alt="...">
+									</div> 
+									<div class="carousel-item"  th:each="card : ${product.cards}">
+										<img th:src="@{/img/pictures/{name}(name=${card.name})}"
+											class="d-block w-100" alt="">
+									</div>
+
+								</div>
+								<a class="carousel-control-prev" href="#carouselExampleControls"
+									role="button" data-slide="prev"> <span
+									class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+									class="sr-only">Previous</span>
+								</a> <a class="carousel-control-next"
+									href="#carouselExampleControls" role="button" data-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="param-box">
+				<div class="row">
+					<div class="col-6">
+						<div class="table-param">
+							<table>
+								<tr>
+									<td>артикул:</td>
+									<td th:text="${product.art}">
+								</tr>
+								<tr>
+									<td>категория:</td>
+									<td th:text="${product.category}">
+								</tr>
+								<tr>
+									<td>наименование:</td>
+									<td th:text="${product.name}">
+								</tr>
+								<tr>
+									<td>сторона:</td>
+									<td th:text="${product.side}">
+								</tr>
+								<tr>
+									<td>направление:</td>
+									<td th:text="${product.front}">
+								</tr>
+								<tr>
+									<td>марка:</td>
+									<td th:text="${product.car.carModel.marka.name}">
+								</tr>
+								<tr>
+									<td>модель:</td>
+									<td th:text="${product.car.carModel.name}+${product.car.carModel.secName}">
+								</tr>
+								<tr>
+									<td>год выпуска:</td>
+									<td th:text="${product.car.yIssue}">
+								</tr>
+								<tr>
+									<td>тип кузова:</td>
+									<td th:text="${product.car.bodyCar}">
+								</tr>
+								<tr>
+									<td>двигатель:</td>
+									<td th:text="${product.car.engine[0].number}">
+								</tr>
+								<tr>
+									<td>тип топлива:</td>
+									<td th:text="${product.car.engine[0].type}">
+								</tr>
+								<tr>
+									<td>объем,л</td>
+									<td th:text="${product.car.engine[0].volume}">
+								</tr>
+								<tr>
+									<td>л/с:</td>
+									<td th:text="${product.car.engine[0].horse}">
+								</tr>
+								<tr>
+									<td>компоновка:</td>
+									<td th:text="${product.car.engine[0].arrang}">
+								</tr>
+								<tr>
+									<td>статус:</td>
+									<td th:text="${product.status}">
+								</tr>
+								<tr>
+									<td>стоимость:</td>
+									<td th:text="${product.price}">
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="notes-box">
+							<div class="notes">
+								<p>Примечание для клиента</p>
+								<p><textarea th:text="${product.textClient}" cols="50" readonly></textarea></p>
+							</div>
+							<div class="notes">
+								<p>Примечание для менеджера</p>
+								<p><textarea th:text="${product.textServer}" cols="50" readonly></textarea></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+	<div th:replace="/fragments/footer :: footer" />
+</body>
+</html>
